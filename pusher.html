@@ -14,10 +14,6 @@
     display: block;
   }
   </style>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 </head>
 <body>
   <h3>Pusher Test - WebSockets</h3>
@@ -63,40 +59,9 @@
       </div>
   </div>
   <!-- -->
-<script>
-  $('.toast').toast("show");
-
-  // Enable pusher logging - don't include this in production
-  Pusher.logToConsole = false;
-
-  var pusher = new Pusher('ca47239ee315d662e6f1', {
-    cluster: 'eu',
-    forceTLS: true
-  });
-
-  var channel = pusher.subscribe('my-channel');
-  channel.bind('my-event', function(data) {
-    render('my-event', data);
-  });
-
-  channel.bind('my-alert', function(data) {
-    render('my-alert', data);
-  });
-
-  function render(msg, data){
-    var ctr = document.getElementById(msg+'s');
-    var tpl = document.getElementById(msg+'-tpl').cloneNode(true);
-    tpl.removeAttribute("id");
-    var from = tpl.getElementsByClassName("ws-data-from")[0];
-    from.innerText = data.name;
-    var msg = tpl.getElementsByClassName("ws-data-body")[0];
-    msg.innerText = data.message;
-    if( ctr.childNodes.length == 0) {
-      ctr.appendChild(tpl);
-    } else {
-      ctr.insertBefore(tpl, ctr.childNodes[0])
-    }
-    
-  }
-</script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+  <script src="helper.js"></script>
 </body>
