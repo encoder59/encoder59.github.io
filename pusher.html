@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <style>
+  .alert {
+    color: red;
+  }
+  .event {
+    color: blue;
+  }
+  .toast {
+    display: block;
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+</head>
+<body>
+  <h1>Pusher Test</h1>
+  <div class="card events">
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+        <div style="position: absolute; top: 0;">
+          <h2>Events in my-channel/my-events</h2>
+          <div id="my-events" aria-live="polite" aria-atomic="true" class="d-flex2 justify-content-center align-items-center" style="min-height: 200px; min-width: 16rem;">
+          </div>
+          <h2>Events in my-channel/my-alerts</h2>
+          <div id="my-alerts" aria-live="polite" aria-atomic="true" class="d-flex2 justify-content-center align-items-center" style="min-height: 200px; min-width: 16rem;">
+          </div>
+        </div>  
+    </div>  
+  </div>
+  <!-- -->
+  <div id="ws_templates" style="display: none">
+      <div id="my-alert-tpl" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+          <div class="toast-header">
+            <i class="fas fa-exclamation-circle" style="color:red; padding-right: 3px;"></i>
+            <strong class="mr-auto ws-data-from">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="toast-body ws-data-body">
+            Hello, world! This is a toast message.
+          </div>
+      </div>
+      <div id="my-event-tpl" class="toast" role="event" aria-live="assertive" aria-atomic="true" data-autohide="false">
+          <div class="toast-header">
+            <i class="far fa-comments" style="color:black; padding-right: 3px;"></i>
+            <strong class="mr-auto ws-data-from">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="toast-body ws-data-body">
+            Hello, world! This is a toast message.
+          </div>
+      </div>
+  </div>
+  <!-- -->
+<script>
+  $('.toast').toast("show");
+
+  // Enable pusher logging - don't include this in production
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('ca47239ee315d662e6f1', {
+    cluster: 'eu',
+    forceTLS: true
+  });
+
+  var channel = pusher.subscribe('my-channel');
+  channel.bind('member_added', function(data) {
+    alert("member_added: "+ JSON.stringify(data));
+  });
+
+  channel.bind('my-event', function(data) {
+    render('my-event', data);
+  });
+
+  channel.bind('my-alert', function(data) {
+    render('my-alert', data);
+  });
+
+  function render(msg, data){
+    var ctr = document.getElementById(msg+'s');
+    var tpl = document.getElementById(msg+'-tpl').cloneNode(true);
+    tpl.removeAttribute("id");
+    var from = tpl.getElementsByClassName("ws-data-from")[0];
+    from.innerText = data.from;
+    var msg = tpl.getElementsByClassName("ws-data-body")[0];
+    msg.innerText = data.message;
+    if( ctr.childNodes.length == 0) {
+      ctr.appendChild(tpl);
+    } else {
+      ctr.insertBefore(tpl, ctr.childNodes[0])
+    }
+    
+  }
+</script>
+</body>
