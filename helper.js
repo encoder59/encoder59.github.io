@@ -28,5 +28,6 @@ function render(msg, data){
   } else {
     ctr.insertBefore(tpl, ctr.childNodes[0])
   }
-  $('.toast').toast('show');
+  var n = $('.toast').length;
+//  $('.toast').toast('show');
 }
