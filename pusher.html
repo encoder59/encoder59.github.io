@@ -88,7 +88,7 @@
     var tpl = document.getElementById(msg+'-tpl').cloneNode(true);
     tpl.removeAttribute("id");
     var from = tpl.getElementsByClassName("ws-data-from")[0];
-    from.innerText = data.from;
+    from.innerText = data.name;
     var msg = tpl.getElementsByClassName("ws-data-body")[0];
     msg.innerText = data.message;
     if( ctr.childNodes.length == 0) {
