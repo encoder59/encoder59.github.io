@@ -20,14 +20,14 @@
   <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 </head>
 <body>
-  <h1>Pusher Test</h1>
+  <h3>Pusher Test - WebSockets</h3>
   <div class="card events">
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
         <div style="position: absolute; top: 0;">
-          <h2>Events in my-channel/my-events</h2>
+          <h4>Eventos en my-channel/my-event</h4>
           <div id="my-events" aria-live="polite" aria-atomic="true" class="d-flex2 justify-content-center align-items-center" style="min-height: 200px; min-width: 16rem;">
           </div>
-          <h2>Events in my-channel/my-alerts</h2>
+          <h4>Eventos en my-channel/my-alert</h4>
           <div id="my-alerts" aria-live="polite" aria-atomic="true" class="d-flex2 justify-content-center align-items-center" style="min-height: 200px; min-width: 16rem;">
           </div>
         </div>  
@@ -67,7 +67,7 @@
   $('.toast').toast("show");
 
   // Enable pusher logging - don't include this in production
-  Pusher.logToConsole = true;
+  Pusher.logToConsole = false;
 
   var pusher = new Pusher('ca47239ee315d662e6f1', {
     cluster: 'eu',
@@ -75,10 +75,6 @@
   });
 
   var channel = pusher.subscribe('my-channel');
-  channel.bind('member_added', function(data) {
-    alert("member_added: "+ JSON.stringify(data));
-  });
-
   channel.bind('my-event', function(data) {
     render('my-event', data);
   });
