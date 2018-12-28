@@ -1,3 +1,5 @@
+$('.toast').toast('show');
+
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = false;
 
@@ -28,6 +30,5 @@ function render(msg, data){
   } else {
     ctr.insertBefore(tpl, ctr.childNodes[0])
   }
-  var n = $('.toast').length;
-//  $('.toast').toast('show');
+  $('.toast').toast();
 }
