@@ -5,7 +5,8 @@ Pusher.logToConsole = false;
 
 var pusher = new Pusher('ca47239ee315d662e6f1', {
   cluster: 'eu',
-  forceTLS: true
+  forceTLS: true,
+  authTransport: 'jsonp'
 });
 
 var channel = pusher.subscribe('private-channel');
