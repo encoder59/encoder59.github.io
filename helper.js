@@ -8,7 +8,7 @@ var pusher = new Pusher('ca47239ee315d662e6f1', {
   forceTLS: true
 });
 
-var channel = pusher.subscribe('my-channel');
+var channel = pusher.subscribe('private-channel');
 channel.bind('my-event', function(data) {
   render('my-event', data);
 });
