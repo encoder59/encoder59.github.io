@@ -14,6 +14,15 @@
             });
         };
 
+
+        if('serviceWorker' in navigator){
+            // Handler for messages coming from the service worker
+            navigator.serviceWorker.addEventListener('message', function(event){
+                console.log("Client 1 Received Message: " + event.data);
+                event.ports[0].postMessage("Client 1 Says 'Hello back!'");
+            });
+        };
+
         function send_message_to_sw(msg){
             return new Promise(function(resolve, reject){
                 // Create a Message Channel
@@ -25,6 +34,7 @@
                         reject(event.data.error);
                     }else{
                         resolve(event.data);
+                        console.log(event.data);
                     }
                 };
 
